@@ -1,15 +1,46 @@
+require 'yaml'
+
 class Game
-  def initialize
+  def initialize()
     @word = random_word
-    @letter_display = "_ " * @word.length
     @incorrect_guesses = 0
     @incorrect_letters = []
+    @letter_display = create_blank_display
+  end
+
+  def load_game
+    if File.exists?("save_game.yml")
+      saved_game = YAML.load(File.read("save_game.yml"))
+      @word = saved_game[:word]
+      @letter_display = saved_game[:letter_display]
+      @incorrect_guesses = saved_game[:incorrect_guesses]
+      @incorrect_letters = saved_game[:incorrect_letters]
+    else
+      puts("Cannot locate a game save file. Starting new game.")
+    end
+    play
+  end
+
+  def save_game_and_exit
+    saved_game = YAML.dump ({
+      :word => @word,
+      :letter_display => @letter_display,
+      :incorrect_guesses => @incorrect_guesses,
+      :incorrect_letters => @incorrect_letters
+    })
+    File.open("save_game.yml", "w") { |file| file.puts(saved_game) }
+    puts("Game saved. Exiting application.")
+    exit
+  end
+
+  def play
     display
     round
   end
 
   private
-
+  
+  # Generates random word from dictionary file that is between 5 and 12 chars
   def random_word
     dictionary_words = File.open("dictionary.txt", "r").readlines.map { |word| word.strip.downcase }
     dictionary_words_between_5_12_chars = dictionary_words.select { |word| word.length >= 5 && word.length <= 12 }
@@ -18,10 +49,12 @@ class Game
 
   def prompt
     loop do
-      puts("Enter a letter. You have #{7 - @incorrect_guesses} incorrect guesses left.")
+      puts("Enter a letter. You have #{7 - @incorrect_guesses} incorrect guesses left. To save the game and exit please enter 'save game'.")
       puts("Incorrect letters so far: #{@incorrect_letters.join(" ")}")
       @letter = gets.chomp.downcase
-      if !(/^[a-z]{1}$/).match?(@letter)
+      if @letter == "save game"
+        save_game_and_exit
+      elsif !(/^[a-z]{1}$/).match?(@letter)
         puts("Invalid input. Input a single letter only")
       else
         break
@@ -29,6 +62,7 @@ class Game
     end
   end
 
+  #
   def round
     until win? || lose?
       prompt
@@ -67,6 +101,11 @@ class Game
     display = "       _____\n      |     #{stick_hangman[0]}\n      |     #{stick_hangman[1]}\n      |    #{stick_hangman[2]}#{stick_hangman[3]}#{stick_hangman[4]}\n      |    #{stick_hangman[5]} #{stick_hangman[6]}\n______|______"
   end
 
+  # Generates the string of blanks e.g; if the word was 'testing' this method will generate a string: "_ _ _ _ _ _ _ "
+  def create_blank_display
+    "_ " * @word.length
+  end
+
   def display
     puts display_hangman
     puts
@@ -90,7 +129,17 @@ class Game
   end
 end
 
-Game.new
+
+
+puts("Would you like to load an existing game or start a new game? Enter 'load' or 'new':")
+case gets.chomp
+when 'new'
+  Game.new.play
+when 'load' 
+  Game.new.load_game
+else
+  puts("Incorrect command. Exiting application.")
+end
 
 
 
