@@ -44,7 +44,7 @@ class Game
   def random_word
     dictionary_words = File.open("dictionary.txt", "r").readlines.map { |word| word.strip.downcase }
     dictionary_words_between_5_12_chars = dictionary_words.select { |word| word.length >= 5 && word.length <= 12 }
-    dictionary_words_between_5_12_chars[rand(0..dictionary_words.length)]
+    dictionary_words_between_5_12_chars[rand(0..dictionary_words_between_5_12_chars.length)]
   end
 
   def prompt
