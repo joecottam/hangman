@@ -1,0 +1,36 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color:rgb(202, 199, 199);
+        }
+    
+    </style>
+</head>
+<body>
+    <div id="main_container">
+        <h1>Welcome to Hangman</h1>
+        <p>
+        <pre>
+            <%= display_hangman %>
+        </pre>
+        </p>
+        <p>
+        <%= display_letters %>
+        </p>
+        <p>Remaining guesses: <%= 7 - incorrect_guesses %>. Incorrect letters: <%= incorrect_letters.join(", ") %> </p>
+        <form>
+            <input type="text" minlength="1" maxlength="1" name="letter_input">
+            <input type="Submit" name="Submit!">
+        </form>
+        <p>
+            <%= win_or_lose %>
+        </p>
+
+        <form method="post" action="/newGame">
+            <input type="submit" value="New Game">
+        </form>
+    </div>
+</body>
+</html>
