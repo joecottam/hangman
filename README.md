@@ -7,4 +7,5 @@ While making this game I learned about serialization, JSON and YAML, and how to 
 
 Update:
 
-Rewrote Hangman as a simple web-app and deployed on Heroku.
+Rewrote Hangman as a simple web-app with Sinatra and deployed on Heroku:
+https://mighty-everglades-84786.herokuapp.com/
