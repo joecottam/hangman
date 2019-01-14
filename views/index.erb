@@ -1,36 +1,53 @@
 <!DOCTYPE <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width", initial-scale=1.0">
     <style>
         body {
-            background-color:rgb(202, 199, 199);
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
-    
+
+        #main_container {
+            text-align: center;
+            margin: 50px;
+        }
+
+        #inside_container {
+            display: inline-block;
+        }   
+        #letter_input {
+            width: 50px;
+        }
+        #hangman_display {
+            text-align: left;
+            padding-left: 80px;
+        }
+  
     </style>
 </head>
 <body>
     <div id="main_container">
-        <h1>Welcome to Hangman</h1>
-        <p>
-        <pre>
-            <%= display_hangman %>
-        </pre>
-        </p>
-        <p>
-        <%= display_letters %>
-        </p>
-        <p>Remaining guesses: <%= 7 - incorrect_guesses %>. Incorrect letters: <%= incorrect_letters.join(", ") %> </p>
-        <form>
-            <input type="text" minlength="1" maxlength="1" name="letter_input">
-            <input type="Submit" name="Submit!">
-        </form>
-        <p>
-            <%= win_or_lose %>
-        </p>
+        <div id="inside_container">
+            <h1>Hangman</h1>
+            <div id="hangman_display">
+                <pre><%= display_hangman %></pre>
+            </div>
+            <p>
+                <%= display_letters %>
+            </p>
+            <p>Remaining guesses: <%= 7 - incorrect_guesses %>. Incorrect letters: <br><%= incorrect_letters.join(", ") %> </p>
+            <form>
+                <input type="text" minlength="1" maxlength="1" id="letter_input" name="letter_input">
+                <input type="Submit" value="Enter Letter">
+            </form>
+            <p>
+                <pre><%= win_or_lose %></pre>
+            </p>
 
-        <form method="post" action="/newGame">
-            <input type="submit" value="New Game">
-        </form>
+            <form method="post" action="/newGame">
+                <input type="submit" value="New Game">
+            </form>
+        </div>
     </div>
 </body>
 </html>

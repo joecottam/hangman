@@ -59,13 +59,14 @@ class Game
     when 7
       stick_hangman = ["|", "0", "/", "|", "\\", "/", "\\"]
     end
-    "\n"\
+ 
+   
     "       _____\n"\
     "      |     #{stick_hangman[0]}\n"\
     "      |     #{stick_hangman[1]}\n"\
     "      |    #{stick_hangman[2]}#{stick_hangman[3]}#{stick_hangman[4]}\n"\
     "      |    #{stick_hangman[5]} #{stick_hangman[6]}\n"\
-    "______|______"
+    "______|______\n"\
   end
 
   # Generates the string of blanks e.g; if the word was 'testing' this method will generate a string: "_ _ _ _ _ _ _ "
@@ -95,7 +96,7 @@ class Game
     if win?
       ("YOU WIN!")
     elsif lose?
-      ("GAME OVER. YOU LOSE! The correct answer was #{@word}.")
+      ("GAME OVER. YOU LOSE! \nThe correct answer was #{@word}.")
     end
   end
 end
