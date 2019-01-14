@@ -18,11 +18,12 @@
         #letter_input {
             width: 50px;
         }
-        #hangman_display {
+        #display {
             text-align: left;
-            padding-left: 80px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 8em;
         }
-  
     </style>
 </head>
 <body>
@@ -30,7 +31,7 @@
         <div id="inside_container">
             <h1>Hangman</h1>
             <div id="hangman_display">
-                <pre><%= display_hangman %></pre>
+                <pre id="display"><%= display_hangman %></pre>
             </div>
             <p>
                 <%= display_letters %>
